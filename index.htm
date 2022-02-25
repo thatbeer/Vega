@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Vega-Lite Bar Chart</title>
+    <meta charset="utf-8" />
+
+    <script src="https://cdn.jsdelivr.net/npm/vega@5.21.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.2.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.20.2"></script>
+
+    <style media="screen">
+      /* Add space between Vega-Embed links  */
+      .vega-actions a {
+        margin-right: 5px;
+      }
+      body{background-color:antiquewhite;}
+    </style>
+  </head>
+  <body>
+    <h1>Annual PM10 Heatmap</h1>
+    <!-- Container for the visualization -->
+    <div id="vis"></div>
+
+    <script>
+      // Assign the specification to a local variable vlSpec.
+      var vlSpec = {
+        "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+        "data": {
+            "url": "https://raw.githubusercontent.com/Maplub/AirQualityData/master/PM10_2018_daily.csv"
+        },
+        "config": {"view": {"strokeWidth": 0, "step": 20}, "axis": {"domain": false}},
+        "mark": "rect",
+        "encoding": {
+        "x": {
+                "timeUnit": "date",
+                "field": "time",
+                "type": "ordinal",
+                "title": "day"
+        },
+        "y": {
+            "field": "time",
+           "timeUnit": "month",
+            "type": "ordinal",
+             "title": "month"
+        },
+        "color": {"aggregate": "mean", "field": "pm10", "type": "quantitative"},
+        "legend": {"title": null}
+        }
+
+      };
+
+      // Embed the visualization in the container with id `vis`
+      vegaEmbed('#vis', vlSpec);
+    </script>
+  </body>
+</html>
